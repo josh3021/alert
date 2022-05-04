@@ -1,13 +1,17 @@
 import {
   API_KEY,
-  API_URI,
   KAKAO_ADDRESS_REST_API_URI,
   KAKAO_REST_API_KEY,
+  MAIN_API_URI,
+  OAK_POLLEN_RISK,
+  TIMEZONE,
 } from "react-native-dotenv";
 
 export default {
   API_KEY,
-  API_URI,
+  MAIN_API_URI,
   KAKAO_ADDRESS_REST_API_URI,
+  OAK_POLLEN_RISK,
   KAKAO_REST_API_KEY,
+  TIMEZONE,
 };

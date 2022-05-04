@@ -5,7 +5,19 @@ module.exports = function (api) {
     plugins: [
       [
         "module:react-native-dotenv",
-        { envName: "APP_ENV", moduleName: "react-native-dotenv", path: ".env" },
+        {
+          envName: "APP_ENV",
+          moduleName: "react-native-dotenv",
+          path: ".env",
+        },
+      ],
+      [
+        "babel-plugin-root-import",
+        {
+          root: __dirname,
+          rootPathPrefix: "~",
+          rootPathSuffix: "./src",
+        },
       ],
     ],
   };

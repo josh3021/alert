@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { RecoilRoot } from "recoil";
-import Pollen from "./pages/Pollen";
+import Pollen from "./src/pages/Pollen";
 
 const Tab = createBottomTabNavigator();
 

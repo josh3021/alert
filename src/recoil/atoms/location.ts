@@ -6,7 +6,12 @@ export const locationState = atom<ILocation | null>({
   default: null,
 });
 
-export const regionState = atom<{ code: number; region: string } | null>({
+export const regionState = atom<{
+  code: number;
+  region_1depth_name: string;
+  region_2depth_name: string;
+  region_3depth_name: string;
+} | null>({
   key: "regionState",
   default: null,
 });

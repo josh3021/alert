@@ -1,3 +1,10 @@
+export type TApiResponse = {
+  status?: number;
+  statusText?: string;
+  data?: any;
+  error?: unknown;
+};
+
 export enum IDataType {
   XML = "XML",
   JSON = "JSON",
