@@ -1,4 +1,4 @@
-interface IRegionCodeDocument {
+export interface IRegionCodeDocument {
   region_type: string;
   address_name: string;
   region_1depth_name: string;

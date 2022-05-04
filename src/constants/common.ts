@@ -1,3 +1,10 @@
+export const DEFAULT_WAITING_TEXT = "Waiting..";
+
+export enum API_DATA_TYPE {
+  XML = "XML",
+  JSON = "JSON",
+}
+
 export enum ALERT_STEP {
   "낮음" = 1,
   "보통",

@@ -7,7 +7,7 @@ import {
   TIMEZONE,
 } from "react-native-dotenv";
 
-export default {
+export default configs = {
   API_KEY,
   MAIN_API_URI,
   KAKAO_ADDRESS_REST_API_URI,

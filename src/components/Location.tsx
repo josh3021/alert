@@ -1,18 +1,20 @@
 import * as ExpoLocation from "expo-location";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { useRecoilState } from "recoil";
+import { DEFAULT_WAITING_TEXT } from "~/constants/common";
 import datas from "~/data.json";
-import { useFetchRegion } from "../api/region";
-import { locationState, regionState } from "../recoil/atoms/location";
+import { useGetRegion } from "~/hooks/useGetRegion";
+import { locationState } from "~/recoil/atoms/location";
+import { regionState } from "~/recoil/atoms/region";
 
 export default function Location() {
   const [location, setLocation] = useRecoilState(locationState);
   const [region, setRegion] = useRecoilState(regionState);
   const [error, setError] = useState<string | null>(null);
-  const [text, setText] = useState<string>("Waiting..");
+  const [text, setText] = useState<string>(DEFAULT_WAITING_TEXT);
 
-  const data = useFetchRegion();
+  const data = useGetRegion();
 
   useEffect(() => {
     (async () => {

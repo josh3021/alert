@@ -1,23 +1,13 @@
-export type TApiResponse = {
-  status?: number;
-  statusText?: string;
-  data?: any;
-  error?: unknown;
-};
+import { API_DATA_TYPE } from "~/constants/common";
 
-export enum IDataType {
-  XML = "XML",
-  JSON = "JSON",
-}
-
-export interface IOakApiResponse {
+export interface IOakAPIResponse {
   response: {
     header: {
       resultCode: string;
       resultMsg: string;
     };
     body: {
-      dataType: IDataType;
+      dataType: API_DATA_TYPE;
       items: {
         item: [
           {
