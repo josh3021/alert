@@ -1,18 +1,29 @@
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { useRecoilValue } from "recoil";
+import { dataItemState } from "~/recoil/atoms/api/dataItem";
 import Location from "./Location";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 export default function Layout() {
+  const dataItem = useRecoilValue(dataItemState);
+  useEffect(() => {
+    if (dataItem) {
+      console.log(`dataItem: ${JSON.stringify(dataItem)}`);
+    }
+  }, [dataItem]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.location}>
           <Location />
         </Text>
-        <Text style={styles.icon}>아이콘</Text>
-        <Text style={styles.description}>높음</Text>
+        <Text style={styles.icon}>ICON</Text>
+        <Text style={styles.description}>
+          {dataItem?.code ? dataItem.code : "Waiting..."}
+        </Text>
       </View>
       <View style={styles.main}>
         <View style={styles.forcastContainer}>
@@ -21,19 +32,29 @@ export default function Layout() {
           </View>
           <View style={styles.forcast}>
             <Text style={styles.day}>오늘</Text>
-            <Text style={styles.forcastDescription}>나쁨</Text>
+            <Text style={styles.forcastDescription}>
+              {dataItem?.today ? dataItem.today : "?"}
+            </Text>
           </View>
           <View style={styles.forcast}>
             <Text style={styles.day}>내일</Text>
-            <Text style={styles.forcastDescription}>나쁨</Text>
+            <Text style={styles.forcastDescription}>
+              {dataItem?.tomorrow ? dataItem.tomorrow : "?"}
+            </Text>
           </View>
           <View style={styles.forcast}>
             <Text style={styles.day}>모레</Text>
-            <Text style={styles.forcastDescription}>나쁨</Text>
+            <Text style={styles.forcastDescription}>
+              {dataItem?.dayaftertomorrow ? dataItem.dayaftertomorrow : "?"}
+            </Text>
           </View>
           <View style={styles.forcast}>
             <Text style={styles.day}>글피</Text>
-            <Text style={styles.forcastDescription}>나쁨</Text>
+            <Text style={styles.forcastDescription}>
+              {dataItem?.twodaysaftertomorrow
+                ? dataItem.twodaysaftertomorrow
+                : "?"}
+            </Text>
           </View>
         </View>
       </View>

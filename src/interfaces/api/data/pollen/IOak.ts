@@ -1,4 +1,5 @@
 import { API_DATA_TYPE } from "~/constants/common";
+import { IDataItem } from "..";
 
 export interface IOakAPIResponse {
   response: {
@@ -9,17 +10,7 @@ export interface IOakAPIResponse {
     body: {
       dataType: API_DATA_TYPE;
       items: {
-        item: [
-          {
-            code: string;
-            areaNo: string;
-            date: string;
-            today: string;
-            tomorrow: string;
-            dayaftertomorrow: string;
-            twodaysaftertomorrow?: string;
-          }
-        ];
+        item: IDataItem[];
       };
       pageNo: number;
       numOfRows: string;

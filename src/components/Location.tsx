@@ -1,18 +1,16 @@
 import * as ExpoLocation from "expo-location";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
-import { useRecoilState } from "recoil";
-import { DEFAULT_WAITING_TEXT } from "~/constants/common";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import datas from "~/data.json";
 import { useGetRegion } from "~/hooks/useGetRegion";
 import { locationState } from "~/recoil/atoms/location";
 import { regionState } from "~/recoil/atoms/region";
 
 export default function Location() {
-  const [location, setLocation] = useRecoilState(locationState);
+  const setLocation = useSetRecoilState(locationState);
   const [region, setRegion] = useRecoilState(regionState);
   const [error, setError] = useState<string | null>(null);
-  const [text, setText] = useState<string>(DEFAULT_WAITING_TEXT);
 
   const data = useGetRegion();
 
@@ -26,30 +24,17 @@ export default function Location() {
       const {
         coords: { latitude, longitude },
         timestamp,
-      } = await ExpoLocation.getCurrentPositionAsync({});
+      } = await ExpoLocation.getCurrentPositionAsync({
+        accuracy: ExpoLocation.LocationAccuracy.Low,
+      });
       setLocation({ latitude, longitude, timestamp });
     })();
   }, []);
 
   if (error) {
-    setText(error);
+    setRegion(null);
+    setError(error);
   }
-
-  //
-  // useEffect(() => {
-  //   if (location) {
-  //     (async () => {
-  //       const  = (await fetchRegionCode(
-  //         location
-  //       )) as ICoord2RegionCode;
-
-  //       setRegion({
-  //         region: regionCode.documents[0].region_3depth_name,
-  //         code: +regionCode.documents[0].code,
-  //       });
-  //     })();
-  //   }
-  // }, [location]);
 
   useEffect(() => {
     if (data) {
@@ -63,18 +48,11 @@ export default function Location() {
     }
   }, [data]);
 
-  // useEffect(() => {
-
-  // }, [region])
-
-  // useEffect(() => {
-  //   if (text && text !== "Waiting..") {
-  //     const data = datas.find((data) => {
-  //       return data.region3 === "text";
-  //     });
-  //     console.log(data);
-  //   }
-  // }, [text]);
-
-  return <Text>{`${region?.region_3depth_name}`}</Text>;
+  return (
+    <Text>{`${
+      region?.region_3depth_name
+        ? region?.region_3depth_name
+        : "위치 찾는 중..."
+    }`}</Text>
+  );
 }
