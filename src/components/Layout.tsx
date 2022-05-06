@@ -5,8 +5,9 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { Icon, Slider } from "react-native-elements";
 import { useRecoilValue } from "recoil";
 import { ITEMS, KOREAN_DATES, RISK_STEPS } from "~/constants/common";
-import { switchColor } from "~/functions/switchColor";
+import { switchColor, switchFoodPoisoningColor } from "~/functions/switchColor";
 import { switchDay } from "~/functions/switchDay";
+import { switchFoodPoisoningRisk } from "~/functions/switchFoodPoisoningRisk";
 import { dataItemState } from "~/recoil/atoms/api/dataItem";
 import { SwitchMainIcon } from "./icons";
 import Location from "./Location";
@@ -29,7 +30,10 @@ export default function Layout({ item }: ILayout) {
     <View
       style={{
         ...styles.container,
-        backgroundColor: switchColor(dataItem, day),
+        backgroundColor:
+          item === ITEMS.FOOD_POISONING_RISK
+            ? switchFoodPoisoningColor(dataItem, day)
+            : switchColor(dataItem, day),
       }}
     >
       <View style={styles.header}>
@@ -44,9 +48,6 @@ export default function Layout({ item }: ILayout) {
             {SwitchMainIcon(item, switchDay(dataItem, day))}
           </Text>
         </View>
-        {/* <Text style={styles.description}>
-          {dataItem?.code ? dataItem.code : "Waiting..."}
-        </Text> */}
       </View>
       <View style={styles.main}>
         <View style={styles.forcastContainer}>
@@ -78,7 +79,17 @@ export default function Layout({ item }: ILayout) {
           </View>
           <View style={styles.riskContainer}>
             <Text style={styles.risk}>
-              위험지수: {dataItem && RISK_STEPS[switchDay(dataItem, day)]}
+              위험지수:{" "}
+              {dataItem &&
+                (item === ITEMS.FOOD_POISONING_RISK
+                  ? RISK_STEPS[
+                      switchFoodPoisoningRisk(switchDay(dataItem, day))
+                    ]
+                  : RISK_STEPS[switchDay(dataItem, day)])}{" "}
+              <Text style={{ fontSize: 24 }}>
+                {switchDay(dataItem, day) >= 0 &&
+                  `(${switchDay(dataItem, day)})`}
+              </Text>
             </Text>
             {/* <View style={{ flex: 4, marginTop: 20, justifyContent: "center" }}>
               <Text>{switchDescription(item, dataItem, day)}</Text>

@@ -16,3 +16,21 @@ export const switchColor = (dataItem: IDataItem | null, day: number) => {
       return "#2c3e50";
   }
 };
+
+export const switchFoodPoisoningColor = (
+  dataItem: IDataItem | null,
+  day: number
+) => {
+  const data = switchDay(dataItem, day);
+  if (data < 0) {
+    return "#2c3e50";
+  } else if (data < 55) {
+    return "#3498db";
+  } else if (data < 71) {
+    return "#2ecc71";
+  } else if (data < 86) {
+    return "#e67e22";
+  } else {
+    return "#c0392b";
+  }
+};
