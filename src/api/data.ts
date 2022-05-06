@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
 import moment from "moment-timezone";
 import config from "~/config";
-import { ITEMS } from "~/constants/common";
+import { ITEMS_URI } from "~/constants/common";
 import { requests } from "./core";
 
 export async function fetchData(
-  item: ITEMS,
+  itemURI: ITEMS_URI,
   regionCode: number
 ): Promise<AxiosResponse<any>> {
   let currentTime = moment().tz(config.TIMEZONE).format("YYYYMMDDHH");
@@ -19,6 +19,6 @@ export async function fetchData(
     throw new Error("RegionCode is NOT Valid");
   }
   return requests.get(
-    `${config.MAIN_API_URI}/${item}?serviceKey=${config.API_KEY}&areaNo=${regionCode}&time=${currentTime}&dataType=JSON`
+    `${config.MAIN_API_URI}/${itemURI}?serviceKey=${config.API_KEY}&areaNo=${regionCode}&time=${currentTime}&dataType=JSON`
   ) as Promise<AxiosResponse<any, any>>;
 }

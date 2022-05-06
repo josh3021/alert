@@ -16,3 +16,4 @@ web-build/
 .env
 
 src/data.json
+src/constants/sources.ts

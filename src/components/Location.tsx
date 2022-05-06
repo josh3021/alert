@@ -49,9 +49,9 @@ export default function Location() {
   }, [data]);
 
   return (
-    <Text>{`${
+    <Text style={{ color: "#FFF" }}>{`${
       region?.region_3depth_name
-        ? region?.region_3depth_name
+        ? `${region?.region_2depth_name} ${region?.region_3depth_name}`
         : "위치 찾는 중..."
     }`}</Text>
   );
