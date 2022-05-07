@@ -1,59 +1,73 @@
 import { StatusBar } from "expo-status-bar";
 import moment from "moment-timezone";
-import { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { Icon, Slider } from "react-native-elements";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ITEMS, KOREAN_DATES, RISK_STEPS } from "~/constants/common";
+import defaultStyles from "~/constants/styles/default";
 import { switchColor, switchFoodPoisoningColor } from "~/functions/switchColor";
 import { switchDay } from "~/functions/switchDay";
 import { switchFoodPoisoningRisk } from "~/functions/switchFoodPoisoningRisk";
 import { dataItemState } from "~/recoil/atoms/api/dataItem";
+import { notProvidingState } from "~/recoil/atoms/api/notProviding";
+import { dayState } from "~/recoil/atoms/day";
+import { itemState } from "~/recoil/atoms/item";
 import { SwitchMainIcon } from "./icons";
 import Location from "./Location";
+import NotProviding from "./NotProviding";
+import Waiting from "./Waiting";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("screen");
-
-interface ILayout {
-  item: ITEMS;
-}
-
-export default function Layout({ item }: ILayout) {
+export default function Layout() {
   const dataItem = useRecoilValue(dataItemState);
-  const [day, setDay] = useState<number>(1);
+  const notProviding = useRecoilValue(notProvidingState);
+  const item = useRecoilValue(itemState);
+  const [day, setDay] = useRecoilState(dayState);
   useEffect(() => {
     if (dataItem) {
       console.log(`dataItem: ${JSON.stringify(dataItem)}`);
     }
   }, [dataItem]);
+  if (notProviding) {
+    return <NotProviding {...notProviding} />;
+  }
+  if (!dataItem) {
+    return <Waiting />;
+  }
   return (
     <View
       style={{
-        ...styles.container,
+        ...defaultStyles.container,
         backgroundColor:
           item === ITEMS.FOOD_POISONING_RISK
             ? switchFoodPoisoningColor(dataItem, day)
             : switchColor(dataItem, day),
       }}
     >
-      <View style={styles.header}>
-        <View style={styles.locationContainer}>
-          <Text style={styles.location}>
-            <Location />
-          </Text>
+      <View style={defaultStyles.locationContainer}>
+        <View style={defaultStyles.location}>
+          <Location />
+        </View>
+        <View style={defaultStyles.lastUpdated}>
+          <Text style={{ ...styles.date, paddingTop: 5 }}>최근 업데이트</Text>
           <Text style={styles.date}>{moment().format("YYYY-MM-DD HH:mm")}</Text>
         </View>
-        <View style={styles.iconContainer}>
-          <Text style={styles.icon}>
-            {SwitchMainIcon(item, switchDay(dataItem, day))}
-          </Text>
-        </View>
       </View>
-      <View style={styles.main}>
+      <View style={defaultStyles.iconContainer}>
+        <Text style={defaultStyles.icon}>
+          {SwitchMainIcon(item, switchDay(dataItem, day))}
+        </Text>
+      </View>
+      <View style={defaultStyles.descriptionContainer}>
         <View style={styles.forcastContainer}>
           <View style={styles.forcast}>
             <View style={styles.dayContainer}>
               <Text style={styles.day}>{KOREAN_DATES[day]}</Text>
+              <Text style={styles.date}>
+                {moment()
+                  .add(day - 1, "days")
+                  .format("YYYY-MM-DD")}
+              </Text>
             </View>
             <Slider
               value={day}
@@ -75,6 +89,7 @@ export default function Layout({ item }: ILayout) {
                   />
                 ),
               }}
+              // style={{ marginTop: 20 }}
             />
           </View>
           <View style={styles.riskContainer}>
@@ -102,44 +117,11 @@ export default function Layout({ item }: ILayout) {
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#2ecc71",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-  },
-  header: {
-    flex: 5,
-    width: SCREEN_WIDTH,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  locationContainer: {
-    flex: 1.5,
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  location: {
-    fontSize: 36,
-    fontWeight: "300",
-  },
   date: { fontSize: 18, fontWeight: "300", color: "#FFF" },
-  iconContainer: { flex: 2, justifyContent: "center" },
-  icon: {
-    fontSize: 85,
-    fontWeight: "600",
-  },
+
   description: {
     fontSize: 25,
     fontWeight: "400",
-  },
-  main: {
-    flex: 2,
-    width: SCREEN_WIDTH,
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "teal",
   },
   forcastContainer: {
     flex: 1,
@@ -148,11 +130,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   forcast: {
-    flex: 1,
+    flex: 2,
     alignItems: "stretch",
     justifyContent: "center",
     paddingLeft: 40,
     paddingRight: 40,
+    // backgroundColor: "blue",
   },
   dayContainer: {
     flex: 1,
@@ -177,6 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingLeft: 20,
     paddingRight: 20,
+    // backgroundColor: "red",
   },
   risk: {
     fontSize: 28,

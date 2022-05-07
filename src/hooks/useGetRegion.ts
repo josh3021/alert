@@ -10,7 +10,6 @@ export const useGetRegion = () => {
   const [datas, setDatas] = useState<IRegionCodeDocument[]>();
   useEffect(() => {
     if (!location) return;
-
     (async () => {
       const { longitude, latitude } = location;
       const response = await Region.getRegion(

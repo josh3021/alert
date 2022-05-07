@@ -1,6 +1,6 @@
 import * as ExpoLocation from "expo-location";
 import { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import datas from "~/data.json";
 import { useGetRegion } from "~/hooks/useGetRegion";
@@ -49,10 +49,18 @@ export default function Location() {
   }, [data]);
 
   return (
-    <Text style={{ color: "#FFF" }}>{`${
+    <Text style={styles.locationText}>{`${
       region?.region_3depth_name
         ? `${region?.region_2depth_name} ${region?.region_3depth_name}`
         : "위치 찾는 중..."
     }`}</Text>
   );
 }
+
+const styles = StyleSheet.create({
+  locationText: {
+    fontSize: 40,
+    fontWeight: "300",
+    color: "#FFF",
+  },
+});

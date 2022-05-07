@@ -11,7 +11,6 @@ import { IDataItem } from "~/interfaces/api/data";
 import { switchDay } from "./switchDay";
 
 const switchDescriptionItem = (risk: number) => {
-  console.log(risk);
   switch (risk) {
     case 0:
       return "low";
