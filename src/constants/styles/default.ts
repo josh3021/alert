@@ -11,16 +11,17 @@ const defaultStyles = StyleSheet.create({
     flexDirection: "column",
   },
   locationContainer: {
-    flex: 1,
+    flex: 3,
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  iconContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
+  iconContainer: { flex: 3, justifyContent: "center", alignItems: "center" },
   descriptionContainer: {
-    flex: 1,
+    flex: 3,
     width: SCREEN_WIDTH,
     alignItems: "center",
     justifyContent: "center",
+    // backgroundColor: "red",
   },
   icon: {
     fontSize: 85,

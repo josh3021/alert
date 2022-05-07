@@ -49,7 +49,7 @@ export default NotProviding;
 
 const styles = StyleSheet.create({
   notProvidingContainer: {
-    flex: 2,
+    flex: 6,
     width: "75%",
     alignItems: "center",
     justifyContent: "center",

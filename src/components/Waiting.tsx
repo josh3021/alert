@@ -41,7 +41,7 @@ export default Waiting;
 
 const styles = StyleSheet.create({
   waitingContainer: {
-    flex: 2,
+    flex: 6,
   },
   waiting: {
     fontSize: 30,

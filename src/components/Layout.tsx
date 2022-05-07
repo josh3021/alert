@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import moment from "moment-timezone";
 import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Icon, Slider } from "react-native-elements";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ITEMS, KOREAN_DATES, RISK_STEPS } from "~/constants/common";
@@ -89,7 +89,6 @@ export default function Layout() {
                   />
                 ),
               }}
-              // style={{ marginTop: 20 }}
             />
           </View>
           <View style={styles.riskContainer}>
@@ -110,6 +109,20 @@ export default function Layout() {
               <Text>{switchDescription(item, dataItem, day)}</Text>
             </View> */}
           </View>
+        </View>
+      </View>
+      <View
+        style={{
+          width: "100%",
+          flex: 0.5,
+          justifyContent: "center",
+          alignItems: "flex-end",
+          // backgroundColor: "white",
+          paddingRight: 2,
+        }}
+      >
+        <View>
+          <Image source={require("~/images/img_opentype01.png")} />
         </View>
       </View>
       <StatusBar style="dark" />
