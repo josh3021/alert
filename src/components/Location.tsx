@@ -1,18 +1,20 @@
 import * as ExpoLocation from "expo-location";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text } from "react-native";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import datas from "~/data.json";
-import { useGetRegion } from "~/hooks/useGetRegion";
+import { useRecoilState } from "recoil";
+import { Region } from "~/api/region";
+import config from "~/config";
+import regionDatas from "~/data.json";
+import { IRegionCodeDocument } from "~/interfaces/api/kakao/ICoord2RegionCode";
 import { locationState } from "~/recoil/atoms/location";
 import { regionState } from "~/recoil/atoms/region";
 
 export default function Location() {
-  const setLocation = useSetRecoilState(locationState);
+  const [location, setLocation] = useRecoilState(locationState);
   const [region, setRegion] = useRecoilState(regionState);
   const [error, setError] = useState<string | null>(null);
-
-  const data = useGetRegion();
+  const [data, setData] = useState<IRegionCodeDocument>();
+  // const data = useGetRegion();
 
   useEffect(() => {
     (async () => {
@@ -31,14 +33,30 @@ export default function Location() {
     })();
   }, []);
 
-  if (error) {
-    setRegion(null);
-    setError(error);
-  }
+  useEffect(() => {
+    if (!error) return;
+    console.error(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (!location) return;
+    (async () => {
+      const { longitude, latitude } = location;
+      const response = await Region.getRegion(
+        `${config.KAKAO_ADDRESS_REST_API_URI}&x=${longitude}&y=${latitude}`,
+        { headers: { Authorization: `KakaoAK ${config.KAKAO_REST_API_KEY}` } }
+      );
+      if (response.status === 200) {
+        const documents = response.data.documents;
+        if (!documents) return setData(undefined);
+        setData(documents.find((d) => d.region_type === "H"));
+      }
+    })();
+  }, [location]);
 
   useEffect(() => {
     if (data) {
-      const r = datas.find(
+      const r = regionDatas.find(
         (d) =>
           d.region_1depth_name === data["region_1depth_name"] &&
           d.region_2depth_name === data["region_2depth_name"] &&

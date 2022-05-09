@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import moment from "moment-timezone";
-import { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Icon, Slider } from "react-native-elements";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -23,11 +22,11 @@ export default function Layout() {
   const notProviding = useRecoilValue(notProvidingState);
   const item = useRecoilValue(itemState);
   const [day, setDay] = useRecoilState(dayState);
-  useEffect(() => {
-    if (dataItem) {
-      console.log(`dataItem: ${JSON.stringify(dataItem)}`);
-    }
-  }, [dataItem]);
+  // useEffect(() => {
+  //   if (dataItem) {
+  //     console.log(`dataItem: ${JSON.stringify(dataItem)}`);
+  //   }
+  // }, [dataItem]);
   if (notProviding) {
     return <NotProviding {...notProviding} />;
   }
@@ -86,6 +85,7 @@ export default function Layout() {
                     reverse
                     containerStyle={styles.thumbIcon}
                     color="#f50"
+                    tvParallaxProperties={undefined}
                   />
                 ),
               }}
