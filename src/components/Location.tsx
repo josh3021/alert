@@ -14,7 +14,6 @@ export default function Location() {
   const [region, setRegion] = useRecoilState(regionState);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<IRegionCodeDocument>();
-  // const data = useGetRegion();
 
   useEffect(() => {
     (async () => {
@@ -66,12 +65,14 @@ export default function Location() {
     }
   }, [data]);
 
+  if (!region) {
+    return <Text style={styles.locationText}>위치 찾는 중..</Text>;
+  }
+
   return (
-    <Text style={styles.locationText}>{`${
-      region?.region_3depth_name
-        ? `${region?.region_2depth_name} ${region?.region_3depth_name}`
-        : "위치 찾는 중..."
-    }`}</Text>
+    <Text
+      style={styles.locationText}
+    >{`${region?.region_2depth_name} ${region?.region_3depth_name}`}</Text>
   );
 }
 

@@ -1,11 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fetchData } from "~/api/data";
 import Layout from "~/components/Layout";
 import { ITEMS, ITEMS_URI } from "~/constants/common";
-import { IOakAPIResponse } from "~/interfaces/api/data/pollen/IOak";
 import { dataItemState } from "~/recoil/atoms/api/dataItem";
 import { notProvidingState } from "~/recoil/atoms/api/notProviding";
 import { itemState } from "~/recoil/atoms/item";
@@ -23,10 +21,10 @@ export default function FoodPoisoningRisk() {
         if (!region) return;
         setNotProvidingState(null);
         setDataItem(null);
-        const response = (await fetchData(
+        const response = await fetchData(
           ITEMS_URI.FOOD_POISONING_RISK,
           region.code
-        )) as AxiosResponse<IOakAPIResponse, any>;
+        );
         if (response.status === 200) {
           const data = response.data;
           if (data.response.header.resultCode === "99") {

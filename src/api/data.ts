@@ -2,12 +2,13 @@ import { AxiosResponse } from "axios";
 import moment from "moment-timezone";
 import config from "~/config";
 import { ITEMS_URI } from "~/constants/common";
+import { IAPIResponse } from "~/interfaces/api/data";
 import { requests } from "./core";
 
 export async function fetchData(
   itemURI: ITEMS_URI,
   regionCode: number
-): Promise<AxiosResponse<any>> {
+): Promise<AxiosResponse<IAPIResponse, any>> {
   let currentTime = moment().tz(config.TIMEZONE).format("YYYYMMDDHH");
   const currentHour = +currentTime.substring(8, 10);
   if (currentHour >= 6 && currentHour < 18) {
@@ -20,5 +21,5 @@ export async function fetchData(
   }
   return requests.get(
     `${config.MAIN_API_URI}/${itemURI}?serviceKey=${config.API_KEY}&areaNo=${regionCode}&time=${currentTime}&dataType=JSON`
-  ) as Promise<AxiosResponse<any, any>>;
+  ) as Promise<AxiosResponse<IAPIResponse, any>>;
 }
