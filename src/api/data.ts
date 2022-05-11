@@ -10,12 +10,12 @@ export async function fetchData(
   regionCode: number
 ): Promise<AxiosResponse<IAPIResponse, any>> {
   let currentTime = moment().tz(config.TIMEZONE).format("YYYYMMDDHH");
-  const currentHour = +currentTime.substring(8, 10);
-  if (currentHour >= 6 && currentHour < 18) {
-    currentTime = `${currentTime.substring(0, 8)}06`;
-  } else {
-    currentTime = `${currentTime.substring(0, 8)}18`;
-  }
+  // const currentHour = +currentTime.substring(8, 10);
+  // if (currentHour >= 6 && currentHour < 18) {
+  //   currentTime = `${currentTime.substring(0, 8)}06`;
+  // } else {
+  //   currentTime = `${currentTime.substring(0, 8)}18`;
+  // }
   if (!regionCode) {
     throw new Error("RegionCode is NOT Valid");
   }

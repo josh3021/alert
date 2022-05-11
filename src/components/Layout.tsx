@@ -22,11 +22,6 @@ export default function Layout() {
   const notProviding = useRecoilValue(notProvidingState);
   const item = useRecoilValue(itemState);
   const [day, setDay] = useRecoilState(dayState);
-  // useEffect(() => {
-  //   if (dataItem) {
-  //     console.log(`dataItem: ${JSON.stringify(dataItem)}`);
-  //   }
-  // }, [dataItem]);
   if (notProviding) {
     return <NotProviding {...notProviding} />;
   }
@@ -71,7 +66,7 @@ export default function Layout() {
             <Slider
               value={day}
               onValueChange={setDay}
-              maximumValue={4}
+              maximumValue={3}
               minimumValue={1}
               step={1}
               trackStyle={styles.trackStyle}

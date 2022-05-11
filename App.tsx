@@ -23,32 +23,38 @@ export default function App() {
             tabBarActiveTintColor: "skyblue",
             tabBarInactiveTintColor: "silver",
           })}
-          detachInactiveScreens={true}
+          detachInactiveScreens={false}
+          initialRouteName={ITEMS_KOREAN.POLLEN_RISK}
         >
           <Tab.Screen
             name={ITEMS_KOREAN.ASTHMA_RISK}
             component={AsthmaRisk}
             navigationKey={ITEMS_KOREAN.ASTHMA_RISK}
+            key={ITEMS_KOREAN.ASTHMA_RISK}
           />
           <Tab.Screen
             name={ITEMS_KOREAN.COLD_RISK}
             component={ColdRisk}
             navigationKey={ITEMS_KOREAN.COLD_RISK}
+            key={ITEMS_KOREAN.COLD_RISK}
           />
           <Tab.Screen
             name={ITEMS_KOREAN.POLLEN_RISK}
             component={PollenRisk}
             navigationKey={ITEMS_KOREAN.POLLEN_RISK}
+            key={ITEMS_KOREAN.POLLEN_RISK}
           />
           <Tab.Screen
             name={ITEMS_KOREAN.STROKE_RISK}
             component={StrokeRisk}
             navigationKey={ITEMS_KOREAN.STROKE_RISK}
+            key={ITEMS_KOREAN.STROKE_RISK}
           />
           <Tab.Screen
             name={ITEMS_KOREAN.FOOD_POISONING_RISK}
             component={FoodPoisoningRisk}
             navigationKey={ITEMS_KOREAN.FOOD_POISONING_RISK}
+            key={ITEMS_KOREAN.FOOD_POISONING_RISK}
           />
         </Tab.Navigator>
       </NavigationContainer>

@@ -85,7 +85,7 @@ export default function PollenLayout({ loading }: { loading: boolean }) {
             <Slider
               value={day}
               onValueChange={setDay}
-              maximumValue={4}
+              maximumValue={3}
               minimumValue={1}
               step={1}
               trackStyle={styles.trackStyle}
@@ -110,6 +110,7 @@ export default function PollenLayout({ loading }: { loading: boolean }) {
               참나무:{" "}
               {oakPollenItem && RISK_STEPS[switchDay(oakPollenItem, day)]}{" "}
               <Text style={{ fontSize: 16 }}>
+                {pinePollenNotProviding && "제공기간[4월~6월]"}
                 {switchDay(oakPollenItem, day) >= 0 &&
                   `(${switchDay(oakPollenItem, day)})`}
               </Text>
@@ -118,6 +119,7 @@ export default function PollenLayout({ loading }: { loading: boolean }) {
               소나무:{" "}
               {pinePollenItem && RISK_STEPS[switchDay(pinePollenItem, day)]}{" "}
               <Text style={{ fontSize: 16 }}>
+                {pinePollenNotProviding && "제공기간[4월~6월]"}
                 {switchDay(pinePollenItem, day) >= 0 &&
                   `(${switchDay(pinePollenItem, day)})`}
               </Text>
@@ -126,6 +128,7 @@ export default function PollenLayout({ loading }: { loading: boolean }) {
               잡초류:{" "}
               {weedsPollenItem && RISK_STEPS[switchDay(weedsPollenItem, day)]}{" "}
               <Text style={{ fontSize: 16 }}>
+                {weedsPollenNotProviding && "제공기간[8월~10월]"}
                 {switchDay(weedsPollenItem, day) >= 0 &&
                   `(${switchDay(weedsPollenItem, day)})`}
               </Text>
@@ -156,7 +159,6 @@ export default function PollenLayout({ loading }: { loading: boolean }) {
 }
 const styles = StyleSheet.create({
   date: { fontSize: 18, fontWeight: "300", color: "#FFF" },
-
   description: {
     fontSize: 25,
     fontWeight: "400",
@@ -165,7 +167,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     // backgroundColor: "",
-    padding: 20,
+    paddingTop: 20,
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 5,
   },
   forcast: {
     flex: 2,
@@ -201,7 +206,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
   },
   risk: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#FFF",
   },
